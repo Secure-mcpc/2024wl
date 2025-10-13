@@ -6,6 +6,8 @@ ul{}
 img{}
 nav{}
 .title{}
+@font-face{font-family: myFont;src:url('kai.ttf');}
+p{font-family:mytFont;font-size:25px;}
 @media (max-width:768px){
   body{}
   .title{}
