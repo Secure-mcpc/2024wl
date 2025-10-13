@@ -1,0 +1,14 @@
+body{}
+header{}
+a{}
+li{}
+ul{}
+img{}
+nav{}
+.title{}
+@media (max-width:768px){
+  body{}
+  .title{}
+  img{}
+  nav{}
+}
