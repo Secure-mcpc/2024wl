@@ -9,6 +9,6 @@ ul{}
 img{}
 footer{}
 .title{}
-.main{min-height:100vh;width:750px;margin-left:auto;margin-right:auto;border:2px solid #a1a1a1;border-top-style:dotted;}
+.main{min-height:100%;width:750px;margin-left:auto;margin-right:auto;border:2px solid #a1a1a1;border-top-style:dotted;}
 @font-face{font-family: myFont;src:url('kai.ttf');}
 p{font-family:mytFont;font-size:25px;}
