@@ -1,6 +1,6 @@
 body{margin:0px;padding:0px;background-color:#fff;color:#000000;min-height:100vh;}
 header{background-image:url('https://secure-mcpc.github.io/2024wl/assets/pic/header.png');background-size:720px auto;height:512;}
-nav{position:sticky;border:1px solid #a1a1a1;}
+nav{position:sticky;border:1px solid #a1a1a1;height:50px;}
 a{font-family:mytFont;font-size:25px;}
 a:hover{font-family:mytFont;font-size:25px;border:1px solid #a1a1a1;border-radius:5px;background-color:#dddddd;}
 a:visited{font-family:mytFont;font-size:25px;}
