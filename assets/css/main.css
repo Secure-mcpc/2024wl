@@ -7,6 +7,6 @@ ul{}
 img{}
 footer{}
 .title{}
-div .main{min-height:100vh;width:750px;margin-left:auto;margin-right:auto;}
+.main{min-height:100vh;width:750px;margin-left:auto;margin-right:auto;}
 @font-face{font-family: myFont;src:url('kai.ttf');}
 p{font-family:mytFont;font-size:25px;}
