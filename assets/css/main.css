@@ -1,5 +1,5 @@
 body{margin:0px;padding:0px;background-color:#fff;color:#000000;min-height:100vh;}
-header{background-image:url('https://secure-mcpc.github.io/2024wl/assets/pic/header.png');background-size:766px auto;height:512;}
+header{background-image:url('https://secure-mcpc.github.io/2024wl/assets/pic/header.png');background-size:720px auto;height:512;}
 nav{position:sticky;}
 a{}
 li{}
@@ -7,13 +7,6 @@ ul{}
 img{}
 footer{}
 .title{}
-div .main{min-height:100vh;width:766px;margin-left:auto;margin-right:auto;}
+div .main{min-height:100vh;width:750px;margin-left:auto;margin-right:auto;}
 @font-face{font-family: myFont;src:url('kai.ttf');}
 p{font-family:mytFont;font-size:25px;}
-/**/
-@media (max-width:768px){
-  body{}
-  .title{}
-  img{}
-  nav{}
-}
