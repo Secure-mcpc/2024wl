@@ -10,5 +10,6 @@ img{}
 footer{}
 .title{}
 .main{min-height:100%;width:750px;margin-left:auto;margin-right:auto;border:2px solid #a1a1a1;border-top-style:dotted;}
+.sb{border:2px solid #a1a1a1;border-left-style:none;border-right-style:none;}
 @font-face{font-family: myFont;src:url('kai.ttf');}
 p{font-family:mytFont;font-size:25px;}
