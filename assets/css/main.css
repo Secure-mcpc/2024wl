@@ -84,13 +84,14 @@ footer{
 	height:100px;
 	width:700px;
 	border-radius:10px;
-	margin:50px;
+	margin:25px;
 }
 .kard:hover{
 	box-shadow:5px 5px 10px #888888;
 }
 @font-face{
-	font-family: myFont;src:url('kai.ttf');
+	font-family:myFont;
+	src:url('kai.ttf');
 }
 p{
 	font-family:mytFont;
