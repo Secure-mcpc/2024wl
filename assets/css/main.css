@@ -16,5 +16,7 @@ footer{}
 #2{}
 #3{}
 #4{}
+.kard{}
+.kard:hover{}
 @font-face{font-family: myFont;src:url('kai.ttf');}
 p{font-family:mytFont;font-size:25px;}
