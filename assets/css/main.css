@@ -20,6 +20,7 @@ nav{
 	height:50px;
 	border-left-style:none;
 	border-right-style:none;
+	border-bottom-style:none;
 }
 a{
 	font-family:mytFont;
