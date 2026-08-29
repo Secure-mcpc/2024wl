@@ -66,16 +66,16 @@ footer{
 	border-right-style:none;
 	border-top-style:none;
 }
-#1{
+#a{
 	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
-#2{
+#b{
 	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
-#3{
+#c{
 	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
-#4{
+#d{
 	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
 .kard{
