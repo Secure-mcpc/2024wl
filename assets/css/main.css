@@ -54,7 +54,7 @@ footer{
 }
 .main{
 	min-height:100%;
-	width:750px;
+	width:800px;
 	margin-left:auto;
 	margin-right:auto;
 	border:2px solid #a1a1a1;
@@ -83,7 +83,7 @@ footer{
 	transition-property:box-shadow;
 	transition-duration:0.2s;
 	height:100px;
-	width:636px;
+	width:686px;
 	border-radius:10px;
 	margin:25px;
 	padding:30px;
