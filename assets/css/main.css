@@ -67,26 +67,26 @@ footer{
 	border-top-style:none;
 }
 #1{
-	
+	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
 #2{
-	
+	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
 #3{
-	
+	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
 #4{
-	
+	background-image:linear-gradient(to bottom right, #00e3ff , #ff00ac);
 }
 .kard{
 	border:2px solid #a1a1a1;
 	transition-property:box-shadow;
 	transition-duration:0.2s;
 	height:100px;
-	width:670px;
+	width:610px;
 	border-radius:10px;
 	margin:25px;
-	padding:15px;
+	padding:30px;
 }
 .kard:hover{
 	box-shadow:5px 5px 10px #888888;
