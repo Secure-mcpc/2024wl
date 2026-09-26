@@ -28,7 +28,6 @@ a{
 	font-family:mytFont;
 	font-size:25px;
 	color:#000000;
-	text-align:center;
 }
 a:hover{
 	border:1px solid #a1a1a1;
@@ -92,6 +91,7 @@ footer{
 	margin-top:12px;
 	margin-bottom:12px;
 	padding:30px;
+	text-align:center;
 }
 .kard:hover{
 	box-shadow:5px 5px 10px #888888;
@@ -110,6 +110,9 @@ footer{
 }
 .nac:hover{
 	box-shadow:5px 5px 10px #888888;
+}
+a .nac{
+	text-align:center;
 }
 @font-face{
 	font-family:myFont;
