@@ -94,6 +94,20 @@ footer{
 .kard:hover{
 	box-shadow:5px 5px 10px #888888;
 }
+.nac{
+	border:1px solid #a1a1a1;
+	transition-property:box-shadow;
+	transition-duration:0.2s;
+	height:45px;
+	width:20%;
+	border-radius:6px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:1.5px;
+}
+.nac:hover{
+	box-shadow:5px 5px 10px #888888;
+}
 @font-face{
 	font-family:myFont;
 	src:url('kai.ttf');
