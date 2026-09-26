@@ -27,6 +27,7 @@ a{
 	font-family:mytFont;
 	font-size:25px;
 	color:#000000;
+	text-align:center;
 }
 a:hover{
 	border:1px solid #a1a1a1;
