@@ -111,7 +111,7 @@ footer{
 .nac:hover{
 	box-shadow:5px 5px 10px #888888;
 }
-a .nac{
+a.nac{
 	text-align:center;
 }
 @font-face{
