@@ -140,6 +140,10 @@ a.nac{
 	height:75px;
 	width:75px;
 }
+.pa1{
+	margin-top:auto;
+	margin-bottom:auto;
+}
 @font-face{
 	font-family:myFont;
 	src:url('kai.ttf');
