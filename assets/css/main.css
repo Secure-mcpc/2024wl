@@ -132,6 +132,10 @@ a.nac{
 .kard2:hover{
 	box-shadow:5px 5px 10px #888888;
 }
+.pam{
+	border-radius:50%;
+	background-color:#0095ff;
+}
 @font-face{
 	font-family:myFont;
 	src:url('kai.ttf');
