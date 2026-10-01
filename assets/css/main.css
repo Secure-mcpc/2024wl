@@ -143,6 +143,12 @@ a.nac{
 	margin-bottom:auto;
 	padding-top:21px;
 }
+.paz{
+	left:50%;
+	position:absolute;
+	margin:0px;
+	margin-top:-57px;
+}
 @font-face{
 	font-family:myFont;
 	src:url('kai.ttf');
