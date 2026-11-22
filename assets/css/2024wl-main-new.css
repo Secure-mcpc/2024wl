@@ -1,0 +1,551 @@
+/* ============================================================================
+   2024wl · 班级主页样式（重写版）
+   ----------------------------------------------------------------------------
+   用法：整体替换 assets/css/main.css 的内容，文件名和位置都不要变。
+   依赖的文件（相对路径按 assets/css/ 计算）：
+       ../pic/header.png  →  assets/pic/header.png
+       ../../kai.ttf      →  仓库根目录的 kai.ttf
+   原则：只换视觉，不动任何 HTML 结构与标签；原有的类名 / ID 全部保留生效。
+   ============================================================================ */
+
+/* ---------------------------- 1. 字体 ------------------------------------- */
+/* 原样式里 @font-face 定义的是 myFont，正文却用了 mytFont（多一个 t），
+   两个名字对不上，楷体从来没加载成功。这里两个都注册，旧写法也能生效。   */
+@font-face{
+	font-family: myFont;
+	src: url('../../kai.ttf') format('truetype');
+	font-display: swap;
+}
+@font-face{
+	font-family: mytFont;
+	src: url('../../kai.ttf') format('truetype');
+	font-display: swap;
+}
+
+/* ---------------------------- 2. 设计变量 --------------------------------- */
+:root{
+	/* 主色取自头图的叶子与地球：青绿 */
+	--brand:        #2e6b5b;
+	--brand-2:      #3f8f74;
+	--brand-soft:   #eaf3ef;
+	--brand-ink:    #1f4f44;
+
+	--ink:          #1b1e24;   /* 正文 */
+	--ink-2:        #6b7280;   /* 次要文字 */
+	--line:         #e5e9e6;   /* 分隔线 / 描边 */
+	--paper:        #fbfcfb;   /* 页面底色 */
+	--card:         #ffffff;
+
+	--r-sm: 8px;
+	--r-md: 12px;
+	--r-lg: 16px;
+
+	--shadow:       0 1px 2px rgba(23,58,47,.05);
+	--shadow-hover: 0 10px 28px rgba(23,58,47,.10);
+
+	--page: 960px;             /* 内容最大宽度 */
+	--ease: cubic-bezier(.2,.7,.3,1);
+
+	--font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+	             "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+	             Arial, sans-serif;
+	--font-cn:   myFont, mytFont, "Kaiti SC", "KaiTi", "STKaiti", "楷体", serif;
+}
+
+/* ---------------------------- 3. 基础重置 --------------------------------- */
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
+html{
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	height: auto;                 /* 原样式写死 2000px，去掉 */
+	min-height: 100vh;
+	background-color: var(--paper);
+	color: var(--ink);
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.65;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+hr{
+	border: 0;
+	border-top: 1px solid var(--line);
+	margin: 16px 0;
+}
+
+/* 全局链接：不再用 25px 的大字号，字号跟随上下文 */
+a{
+	font-family: var(--font-body);
+	font-size: inherit;
+	color: inherit;
+	text-decoration: none;
+}
+a:visited{ color: inherit; }
+a:focus-visible{
+	outline: 2px solid var(--brand);
+	outline-offset: 2px;
+	border-radius: var(--r-sm);
+}
+
+p{
+	font-family: var(--font-body);
+	font-size: clamp(14px, 1vw, 15px);
+	line-height: 1.75;
+	margin: 0 0 8px;
+	color: var(--ink);
+}
+
+h1, h2, h3{
+	font-family: var(--font-cn);
+	font-weight: 600;
+	letter-spacing: .02em;
+	color: var(--ink);
+	line-height: 1.35;
+}
+
+/* ---------------------------- 4. 页面容器 --------------------------------- */
+.main{
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* ---------------------------- 5. 头部 banner ------------------------------ */
+/* 原样式 height:512 少了单位，整条声明被丢弃 → 高度 0，1.2MB 的头图从来没显示过。
+   这里给固定比例区间的高度，图片用 contain 完整保留、不裁人物。            */
+header{
+	position: relative;
+	height: clamp(140px, 24vw, 300px);
+	background-color: #fbfdfc;
+	background-image: url('../pic/header.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;      /* 整幅插画完整显示，不裁人物 */
+	border-bottom: 1px solid var(--line);
+}
+
+/* 底边柔化：让插画下缘自然融进页面，不会撞在导航线上 */
+header::after{
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 32%;
+	background: linear-gradient(to bottom, rgba(251,252,251,0) 0%, #fbfcfb 100%);
+	pointer-events: none;
+}
+
+/* ---------------------------- 6. 导航 ------------------------------------- */
+/* 原样式：sticky 但高度 70px / 字号 40px / width:20% + margin-left:4%，
+   桌面勉强、手机挤成一团。这里改成自适应四等分，字号随屏幕缩放。        */
+nav{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: auto;
+	padding: 8px max(8px, calc((100% - var(--page)) / 2));
+	background-color: rgba(251,252,251,.88);
+	-webkit-backdrop-filter: saturate(1.4) blur(10px);
+	backdrop-filter: saturate(1.4) blur(10px);
+	border: 0;
+	border-bottom: 1px solid var(--line);
+}
+
+nav > a,
+.nac{
+	flex: 1 1 0;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 42px;
+	padding: 0 6px;
+	margin: 0;                     /* 清掉 4% 的左外边距 */
+	width: auto;                   /* 清掉 20% 固定宽度 */
+	border: 1px solid transparent;
+	border-radius: var(--r-sm);
+	background: transparent;
+	color: var(--ink-2);
+	font-family: var(--font-body);
+	font-size: clamp(13px, 1.5vw, 15px);
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: background-color .18s var(--ease),
+	            color .18s var(--ease),
+	            border-color .18s var(--ease);
+}
+
+/* hover 只在有鼠标的设备上生效，避免手机上"粘住" */
+@media (hover: hover){
+	nav > a:hover,
+	.nac:hover{
+		background-color: var(--brand-soft);
+		color: var(--brand-ink);
+		border-color: transparent;
+		box-shadow: none;
+	}
+}
+
+/* ---------------------------- 7. 内容区 ----------------------------------- */
+.sb{
+	width: 100%;
+	max-width: var(--page);
+	margin: 0 auto;
+	padding: clamp(18px, 3vw, 32px) clamp(14px, 3vw, 24px) clamp(32px, 5vw, 56px);
+	border: 0;                     /* 原样式只剩一条底边框，这里交给页面统一处理 */
+}
+
+/* 列表页里的每个卡片都是 <a> 包一个 .kard / .kard2 */
+.sb > a{
+	display: block;
+	color: inherit;
+	border-radius: var(--r-md);
+}
+
+/* 列表页标题（HTML 里带了 style="margin-left:6%"，必须用 !important 覆盖回中） */
+.sb h2{
+	margin: 0 0 clamp(14px, 2vw, 20px) !important;
+	padding: 0;
+	font-size: clamp(17px, 2vw, 21px);
+	font-weight: 600;
+	color: var(--brand-ink);
+	letter-spacing: .06em;
+	text-align: center;
+}
+
+.sb > hr{
+	width: min(100%, 640px);
+	margin: clamp(14px, 2vw, 20px) auto;
+	border: 0;
+	border-top: 1px solid var(--line);
+}
+
+.sb h2::after{
+	content: "";
+	display: block;
+	width: 36px;
+	height: 2px;
+	margin: 10px auto 0;
+	background: var(--brand);
+	opacity: .55;
+	border-radius: 2px;
+}
+
+/* 主页三张大卡片 --------------------------------------------------------- */
+/* 原来的 cyan→magenta 双向渐变是整站最"廉价"的一处；改成单色系浅渐变。    */
+.kard{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 96px;
+	height: auto;
+	width: 100%;
+	max-width: 720px;
+	margin: 12px auto;
+	padding: clamp(20px, 3vw, 30px) clamp(18px, 3vw, 28px);
+	border: 1px solid var(--line);
+	border-radius: var(--r-md);
+	background-color: var(--card);
+	background-image: linear-gradient(165deg, #ffffff 0%, #f3f8f5 100%);
+	box-shadow: var(--shadow);
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	transition: box-shadow .22s var(--ease),
+	            transform .22s var(--ease),
+	            border-color .22s var(--ease);
+}
+
+/* 覆盖 #a/#b/#c 原来的双色渐变 */
+#a, #b, #c{
+	background-image: linear-gradient(165deg, #ffffff 0%, #f3f8f5 100%);
+}
+
+@media (hover: hover){
+	.kard:hover{
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-hover);
+		border-color: var(--brand-soft);
+	}
+	.kard:hover::after{
+		opacity: .75;
+		transform: translate(0, -50%);
+	}
+}
+
+.kard::after{
+	content: "›";
+	position: absolute;
+	right: clamp(14px, 2vw, 22px);
+	top: 50%;
+	transform: translate(-6px, -50%);
+	opacity: 0;
+	color: var(--brand);
+	font-family: var(--font-body);
+	font-size: 24px;
+	line-height: 1;
+	transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+
+.kard h1{
+	margin: 0;
+	font-size: clamp(18px, 2.4vw, 23px);
+	font-weight: 600;
+	color: var(--brand-ink);
+	letter-spacing: .06em;
+}
+
+/* 成员 / 老师列表项 ------------------------------------------------------- */
+/* 原样式把姓名用 position:absolute + margin-top:-57px 硬靠在头像旁边，
+   换行、改字号、换屏幕都会错位。这里换成 flex 一行流，彻底去掉魔法数字。 */
+.kard2{
+	display: flex;
+	align-items: center;
+	gap: clamp(10px, 1.6vw, 16px);
+	height: auto;
+	width: 100%;
+	max-width: 720px;
+	margin: 9px auto;
+	padding: clamp(9px, 1.2vw, 12px) clamp(12px, 2vw, 18px);
+	border: 1px solid var(--line);
+	border-radius: var(--r-md);
+	background-color: var(--card);
+	box-shadow: var(--shadow);
+	transition: box-shadow .22s var(--ease),
+	            transform .22s var(--ease),
+	            border-color .22s var(--ease);
+}
+
+@media (hover: hover){
+	.kard2:hover{
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-hover);
+		border-color: var(--brand-soft);
+	}
+	.kard2:hover::after{
+		color: var(--brand);
+		transform: translateX(2px);
+	}
+}
+
+/* 右侧箭头：让一眼看出"这张卡能点进去" */
+.kard2::after{
+	content: "›";
+	flex: 0 0 auto;
+	margin-left: 4px;
+	color: #c3cdc8;
+	font-family: var(--font-body);
+	font-size: 20px;
+	line-height: 1;
+	transition: color .2s var(--ease), transform .2s var(--ease);
+}
+
+/* 头像位：原来是蓝底白字 + 居中问号，改成柔和的青绿底 */
+.pam{
+	flex: 0 0 auto;
+	width: clamp(40px, 5vw, 48px);
+	height: clamp(40px, 5vw, 48px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background-color: var(--brand-soft);
+	color: var(--brand);
+	text-align: center;
+}
+
+.pa1{
+	margin: 0 !important;
+	padding: 0 !important;         /* 清掉原来的 padding-top:21px */
+	font-family: var(--font-cn);
+	font-size: clamp(13px, 1.4vw, 15px);
+	line-height: 1.1;
+	letter-spacing: .02em;
+	color: var(--brand-ink);
+	white-space: nowrap;
+}
+
+/* 姓名 */
+.paz{
+	position: static;              /* 清掉 absolute */
+	left: auto;
+	margin: 0 !important;          /* 清掉 -57px */
+	flex: 1 1 auto;
+	min-width: 0;
+	font-family: var(--font-cn);
+	font-size: clamp(15px, 1.7vw, 17px);
+	font-weight: 600;
+	color: var(--ink);
+	letter-spacing: .04em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* ---------------------------- 8. 详情页 ----------------------------------- */
+/* members/a/example.html 这类页面：字段标题也用 h1，所以第一个 h1 是姓名，
+   后面的 h1 降级成小标签。用 :first-of-type / :not() 分流，不动 HTML。   */
+.sb6{
+	width: 100%;
+	max-width: 680px;
+	margin: clamp(18px, 3vw, 28px) auto clamp(40px, 6vw, 64px);
+	padding: clamp(20px, 3vw, 36px) clamp(18px, 3.5vw, 32px);
+	padding-left: clamp(18px, 3.5vw, 32px);
+	padding-right: clamp(18px, 3.5vw, 32px);
+	background-color: var(--card);
+	border: 1px solid var(--line);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow);
+}
+
+.sb6 h1{
+	margin: 0 0 4px;
+	font-size: clamp(12.5px, 1.1vw, 13px);
+	font-weight: 500;
+	color: var(--ink-2);
+	letter-spacing: .18em;
+	font-family: var(--font-body);
+}
+
+/* 首个 h1 = 姓名 */
+.sb6 h1:first-of-type{
+	margin: 0 0 14px;
+	font-family: var(--font-cn);
+	font-size: clamp(24px, 4vw, 32px);
+	font-weight: 600;
+	color: var(--brand-ink);
+	letter-spacing: .10em;
+	text-align: center;
+}
+
+/* 姓名外层套了 <big>，避免字号叠加放大 */
+.sb6 h1 big{
+	font-size: 1em;
+	font-weight: inherit;
+}
+
+.sb6 hr{
+	border-top: 1px dashed var(--line);
+	margin: 14px 0;
+}
+
+.sb6 p{
+	margin: 0 0 10px;
+	color: var(--ink);
+	font-size: clamp(15px, 1.25vw, 17px);
+	line-height: 1.8;
+	letter-spacing: .02em;
+}
+
+/* ---------------------------- 9. 其它页 ----------------------------------- */
+/* others/index.html 里是 <div><h2>…</h2></div> + <hr/> + <p> */
+.sb > div{
+	margin: 0;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* ---------------------------- 10. 小屏适配 -------------------------------- */
+@media (max-width: 760px){
+	header{
+		height: clamp(116px, 30vw, 180px);
+	}
+
+	nav{
+		gap: 4px;
+		padding: 7px 8px;
+	}
+
+	nav > a,
+	.nac{
+		height: 40px;
+		font-size: 13px;
+		padding: 0 4px;
+	}
+
+	.sb{
+		padding: 16px 12px max(36px, env(safe-area-inset-bottom));
+	}
+
+	.kard{
+		padding: 18px 16px;
+		min-height: 84px;
+	}
+
+	.kard2{
+		margin: 7px auto;
+	}
+
+	.sb6{
+		margin: 14px 10px 32px;
+	}
+}
+
+@media (max-width: 400px){
+	nav{
+		gap: 2px;
+		padding: 6px 6px;
+	}
+
+	nav > a,
+	.nac{
+		height: 38px;
+		font-size: 12.5px;
+		letter-spacing: 0;
+	}
+
+	.kard2{
+		padding: 8px 10px;
+		gap: 9px;
+	}
+
+	.paz{
+		font-size: 14.5px;
+	}
+}
+
+/* 大屏：内容居中，别让 686px 的卡片在小容器里溢出 */
+@media (min-width: 1100px){
+	.sb{
+		padding-top: 40px;
+	}
+}
+
+/* ---------------------------- 11. 动效开关 -------------------------------- */
+@media (prefers-reduced-motion: reduce){
+	html{ scroll-behavior: auto; }
+	*,
+	*::before,
+	*::after{
+		transition-duration: .01ms !important;
+		animation-duration: .01ms !important;
+	}
+}
+/* （注：内容由AI生成） */
